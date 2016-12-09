@@ -1,0 +1,11 @@
+import rtconfig
+Import('RTT_ROOT')
+from building import *
+
+cwd = GetCurrentDir()
+src = Glob('*.c')
+
+CPPPATH = [cwd]
+group = DefineGroup('wlan', src, depend = ['WIFI_USING_AP6181'], CPPPATH = CPPPATH)
+
+Return('group')

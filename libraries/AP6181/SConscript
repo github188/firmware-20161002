@@ -1,0 +1,44 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = Split('''
+network/LwIP/WWD/wwd_buffer.c
+network/LwIP/WWD/wwd_network.c
+WWD/internal/wwd_sdpcm.c
+WWD/internal/wwd_internal.c
+WWD/internal/wwd_logging.c
+WWD/internal/wwd_management.c
+WWD/internal/wwd_thread.c
+WWD/internal/wwd_wifi.c
+WWD/internal/chips/43362A2/wwd_ap.c
+WWD/internal/chips/43362A2/43362A2_bin.c
+WWD/internal/bus_protocols/SDIO/wwd_bus_protocol.c
+WWD/internal/bus_protocols/wwd_bus_common.c
+RTOS/rtthread/wwd_rtthread.c
+RTOS/rtthread/wwd_platform.c
+RTOS/rtthread/wwd_netif.c
+RTOS/rtthread/wwd_SDIO.c
+RTOS/rtthread/wwd_resources.c
+libraries/utilities/TLV/tlv.c
+''')
+
+LOCAL_CPPPATH = [cwd, 
+cwd + '/include',
+cwd + '/WWD',
+cwd + '/WWD/internal/bus_protocols/SDIO',
+cwd + '/libraries/utilities/TLV'
+]
+
+myccflags = (' -DWWD_DIRECT_RESOURCES')
+
+CPPPATH = [cwd + '/include', 
+cwd + '/WWD/internal/chips/43362A2',
+cwd + '/RTOS/rtthread',
+cwd + '/WWD/include',
+cwd + '/',
+cwd + '/WWD/include/network',
+]
+
+group = DefineGroup('WICED', src, depend = ['WIFI_USING_AP6181'], LOCAL_CPPPATH = LOCAL_CPPPATH, CPPPATH = CPPPATH, CCFLAGS = myccflags)
+
+Return('group')

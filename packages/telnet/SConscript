@@ -1,0 +1,8 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = Glob('*.c')
+
+group = DefineGroup('telnet', src, depend = ['RT_USING_FINSH', 'RT_USING_LWIP'])
+
+Return('group')

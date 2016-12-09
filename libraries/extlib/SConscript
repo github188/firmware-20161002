@@ -1,0 +1,39 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd  = GetCurrentDir()
+
+# The set of source files associated with this SConscript file.
+src = Glob('src/*.c')
+
+path = [cwd + '/inc']
+path += [cwd + '/inc/dsp']
+path += [cwd + '/inc/isp']
+path += [cwd + '/inc/types']
+path += [cwd + '/inc/di']
+
+LIBS   = Glob('*.a')
+if GetDepend('RT_USING_OV9732'):
+        LIBS += ['libov9732_rtt.a']
+if GetDepend('RT_USING_OV9712'):
+        LIBS += ['libov9712_rtt.a']
+if GetDepend('RT_USING_AR0130'):
+        LIBS += ['libar0130_rtt.a']
+if GetDepend('RT_USING_IMX138'):
+        LIBS += ['libimx-138_rtt.a']
+if GetDepend('RT_USING_GC1024'):
+        LIBS += ['libgc1024_rtt.a']
+if GetDepend('RT_USING_H42'):
+        LIBS += ['libH42_rtt.a']
+if GetDepend('RT_USING_BF3016'):
+        LIBS += ['libbf3016_rtt.a']
+LIBPATH = [cwd]
+
+if GetDepend('FH_USING_MULTI_SENSOR'):
+    LIBPATH += [cwd + '/sensors/multiple']
+else:
+    LIBPATH += [cwd + '/sensors']
+group = DefineGroup('extlib', src, depend = [''], CPPPATH=path,LIBS=LIBS, LIBPATH=LIBPATH)
+
+Return('group')

@@ -1,0 +1,11 @@
+import rtconfig
+Import('RTT_ROOT')
+from building import *
+
+cwd = GetCurrentDir()
+src = Glob('*.c')
+
+CPPPATH = [cwd, str(Dir('#'))]
+group = DefineGroup('sample_venc', src, depend = ['RT_USING_SAMPLE_VENC'], CPPPATH = CPPPATH)
+
+Return('group')
